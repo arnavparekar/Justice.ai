@@ -71,6 +71,7 @@ export default {
   font-size: 24px;
   margin-bottom: 20px;
   color: #004aad; /* Primary color of legalAide */
+  text-align: center;
 }
 
 .lawyer-view input {

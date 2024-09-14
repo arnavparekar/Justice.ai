@@ -2,9 +2,9 @@
   <header>
     <nav>
       <router-link to="/">Home</router-link>
-      <router-link to="/docai">Doc.AI</router-link>
-      <router-link to="/available-documents">Available Documents</router-link>
-      <router-link to="/query-page">Query Page</router-link>
+      <router-link to="/case-analysis">Case Analysis</router-link>
+      <router-link to="/document-summarization">Document Summarization</router-link>
+      <router-link to="/argument-prediction">Argument Prediction</router-link>
       <router-link to="/judge-view">Judge View</router-link>
       <router-link to="/lawyer-view">Lawyer View</router-link>
     </nav>
