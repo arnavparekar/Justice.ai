@@ -1,24 +1,15 @@
 <template>
   <div class="page-background">
-    <div class="prediction-box">
-      <h2>Predict the Arguments</h2>
-      <div class="input-box">
-        <select v-model="selectedCaseType" required>
-          <option disabled value="">Select Case Type</option>
-          <option v-for="caseType in caseTypes" :key="caseType" :value="caseType">
-            {{ caseType }}
-          </option>
-        </select>
-        <input type="file" @change="handleFileUpload" />
-        <button @click="handlePredict">Predict</button>
+    <div class="chatbot-box">
+      <h2>Argument Prediction Chatbot</h2>
+      <div class="chat-window">
+        <div v-for="message in chatMessages" :key="message.id" :class="['chat-message', message.sender]">
+          <p>{{ message.text }}</p>
+        </div>
       </div>
-    </div>
-
-    <!-- Output box outside the main box -->
-    <div v-if="showOutput" class="output-container">
-      <h3 class="output-title">Predicted Argument:</h3>
-      <div class="output-box">
-        <p v-html="formattedResult"></p>
+      <div class="input-box">
+        <input v-model="userMessage" @keyup.enter="sendMessage" placeholder="Describe your case..." />
+        <button @click="sendMessage">Send</button>
       </div>
     </div>
   </div>
@@ -29,50 +20,61 @@ export default {
   name: 'ArgumentPrediction',
   data() {
     return {
-      selectedCaseType: '',
-      file: null,
-      showOutput: false,
-      result: '',
-      formattedResult: '',
-      caseTypes: [
-        'Labour Matters', 'Rent Matters', 'Direct Taxes Matters', 'Indirect Taxes Matters', 'Land Acquisition and Requisition Matters',
-        'Service Matters', 'Academic Matters', 'Election Matters', 'Company Law, MRTP, TRAI, SEBI, IDRAI & RBI', 'Arbitration Matters',
-        'Compensation Matters', 'Habeas Corpus', 'Criminal Matters', 'Appeal Against Orders Of Statutory Bodies',
-        'Divorce and Child Custody Matters', 'Inter caste Marriage Matters', 'Religious & Charitable Endowments',
-        'Mercantile Laws', 'Commercial Transactions Including Banking',
+      chatMessages: [
+        { id: 1, sender: 'bot', text: 'Hi! Please describe your case, and I will help predict arguments from both sides.' }
       ],
+      userMessage: '',  // This is the input from the user
     };
   },
   methods: {
-    handleFileUpload(event) {
-      this.file = event.target.files[0];
-    },
-    handlePredict() {
-      if (!this.selectedCaseType || !this.file) {
-        alert('Please select a case type and upload a file.');
+    async sendMessage() {
+      // Check if the input is empty
+      if (!this.userMessage.trim()) {
         return;
       }
 
-      const text = `Sample predicted argument for the case type: ${this.selectedCaseType}.`; 
-      this.result = text;
-      this.typeWriterEffect(text, 0);
-      this.showOutput = true;
+      // Add user's message to the chat
+      this.addMessage('user', this.userMessage);
+
+      // Process message and get response from Flask
+      const result = await this.fetchArgumentPrediction(this.userMessage);
+
+      // Add Gemini's response to the chat
+      this.addMessage('bot', result);
+
+      // Clear the input field
+      this.userMessage = '';
     },
-    typeWriterEffect(text, index) {
-      const words = text.split(' ');
-      const interval = 50; 
-      const wordsPerStep = 2;
-      let currentIndex = index;
 
-      const updateText = () => {
-        if (currentIndex < words.length) {
-          this.formattedResult = words.slice(0, currentIndex + wordsPerStep).join(' ');
-          currentIndex += wordsPerStep;
-          setTimeout(updateText, interval);
+    addMessage(sender, text) {
+      const id = this.chatMessages.length + 1;
+      this.chatMessages.push({ id, sender, text });
+    },
+
+    async fetchArgumentPrediction(userMessage) {
+      try {
+        const result = await fetch('http://localhost:5000/argument-predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userMessage: userMessage  // Passing user input to Flask
+          }),
+        });
+
+        if (!result.ok) {
+          throw new Error(`Error: ${result.statusText}`);
         }
-      };
 
-      updateText();
+        const data = await result.json();
+
+        // Return the analysis from the Flask backend
+        return data.analysis || 'Sorry, no analysis was returned.';
+      } catch (error) {
+        console.error('Error fetching prediction:', error);
+        return 'Sorry, there was an error processing your request. Please try again later.';
+      }
     },
   },
 };
@@ -86,7 +88,7 @@ export default {
   box-sizing: border-box;
 }
 
-.prediction-box {
+.chatbot-box {
   max-width: 600px;
   margin: 40px auto;
   padding: 20px;
@@ -96,70 +98,60 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.prediction-box h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #004aad;
+h2 {
   text-align: center;
+  color: #004aad;
+  margin-bottom: 20px;
+}
+
+.chat-window {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.chat-message.user {
+  background-color: #d4e5ff;
+  text-align: right;
+}
+
+.chat-message.bot {
+  background-color: #f5f5f5;
+  text-align: left;
 }
 
 .input-box {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 20px;
+  justify-content: space-between;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.input-box select,
-.input-box input {
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.input-box button {
+button {
   padding: 10px 20px;
   background-color: #004aad;
   color: white;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.input-box button:hover {
-  background-color: #003780;
-}
-
-.output-container {
-  margin-top: 40px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.output-title {
-  font-size: 22px;
-  font-weight: bold;
-  color: #e94e77;
-  margin-bottom: 10px;
-}
-
-.output-box {
-  padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #ffffff;
-  max-width: 100%;
-  max-height: 400px;
-  overflow-y: auto;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: #003780;
 }
 </style>
