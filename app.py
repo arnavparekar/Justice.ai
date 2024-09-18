@@ -10,7 +10,7 @@ import pytesseract
 app = Flask(__name__)
 CORS(app)
 
-api_key = "AIzaSyAdGwGGhCx7vmy4trLZKEJftgQ2VZqIlbI"
+api_key = "AIzaSyCaWtf_lQLw9D3aE--GGZwkunDLzF8D4Bc"
 genai.configure(api_key=api_key)
 
 pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
@@ -22,7 +22,7 @@ def argument_predict():
 
     try:
         model = genai.GenerativeModel("gemini-1.5-pro")
-        prompt = ("Here's some description of a case, can you please tell, what arguments can be made from both sides? And how likely is the user to win?")
+        prompt = ("Here's some description of a case, can you please tell, what arguments can be made from both sides? And how likely is the user to win (like an approximate percentage) ?")
 
         response = model.generate_content([prompt, user_input])
         result = response.text
@@ -72,7 +72,7 @@ def upload_document():
         os.remove(file_path)
 
         # Send extracted text to the Gemini API for summarization
-        model = genai.GenerativeModel("gemini-1.5-pro")
+        model = genai.GenerativeModel("gemini-1.5-flash")
         prompt = "Here is the text of a legal document. Please summarize it for me."
         response = model.generate_content([prompt, extracted_text])
         summary = response.text
