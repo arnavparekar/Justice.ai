@@ -6,11 +6,11 @@
         <div class="hehe2">
           <h1>Welcome to LegalAide</h1>
           <p id="para1">
-            Translate, summarize and simplify legal documents easily and securely
+            Translate, summarize, and simplify legal documents easily and securely
           </p>
           <p id="para2">
             Upload your document to receive accurate translations and simplified
-            summaries in your regional language. Powered by AI and ML
+            summaries in your regional language. Powered by AI and ML.
           </p>
         </div>
         <div class="hehe3">
@@ -44,6 +44,25 @@ export default {
     return {
       image,
     };
+  },
+  mounted() {
+    // Watson Assistant Chatbot Integration Script
+    window.watsonAssistantChatOptions = {
+      integrationID: "", // The ID of this integration.
+      region: "us-south", // The region your integration is hosted in.
+      serviceInstanceID: "", // The ID of your service instance.
+      onLoad: async (instance) => {
+        await instance.render();
+      },
+    };
+    setTimeout(() => {
+      const script = document.createElement("script");
+      script.src =
+        "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" +
+        (window.watsonAssistantChatOptions.clientVersion || "latest") +
+        "/WatsonAssistantChatEntry.js";
+      document.head.appendChild(script);
+    });
   },
 };
 </script>

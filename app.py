@@ -53,7 +53,7 @@ def upload_document():
         print(f"Processing PDF: {file_path}")
         
         # Convert PDF to images (for multi-page PDFs)
-        images = convert_from_path(file_path, poppler_path="C:/Users/Nikhil/Downloads/Release-24.07.0-0/poppler-24.07.0/Library/bin")  # Update path as necessary
+        images = convert_from_path(file_path, poppler_path="C:/Users/Aditi/OneDrive/Desktop/poppler-24.07.0/Library/bin")  # Update path as necessary
 
         print(f"Number of pages: {len(images)}")
         
