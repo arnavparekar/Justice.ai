@@ -1,21 +1,13 @@
 <template>
   <div class="page-background">
     <div class="summarization-box">
-      <h2>Summarise this document</h2>
+      <h2>Summarize this document</h2>
       <div class="input-box">
-        <select v-model="selectedLanguage" required>
-          <option disabled value="">Select Language</option>
-          <option v-for="language in languages" :key="language" :value="language">
-            {{ language }}
-          </option>
-        </select>
         <input type="file" @change="handleFileUpload" />
-        <button @click="handleSummarize">Summarise</button>
-        <!-- No message line here -->
+        <button @click="handleSummarize">Summarize</button>
       </div>
     </div>
 
-    <!-- Output box outside the main box -->
     <div v-if="showOutput" class="output-container">
       <h3 class="output-title">Document Summary:</h3>
       <div class="output-box">
@@ -26,38 +18,55 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'DocumentSummarization',
   data() {
     return {
-      selectedLanguage: '',
       file: null,
       showOutput: false,
       result: '',
       formattedResult: '',
-      languages: [
-        'Assamese', 'Bengali', 'Gujarati', 'Kannada', 'Kashmiri', 'Konkani', 'Malayalam', 'Manipuri', 'Marathi', 'Odia', 'Punjabi', 'Sanskrit', 'Sindhi', 'Tamil', 'Telugu', 'Urdu',
-      ],
     };
   },
   methods: {
     handleFileUpload(event) {
       this.file = event.target.files[0];
     },
-    handleSummarize() {
-      if (!this.selectedLanguage || !this.file) {
-        alert('Please select a language and upload a file.');
+    async handleSummarize() {
+      if (!this.file) {
+        alert('Please upload a file.');
         return;
       }
 
-      const text = `Sample text to be summarized in the ${this.selectedLanguage} language.`; 
-      this.result = text;
-      this.typeWriterEffect(text, 0);
-      this.showOutput = true;
+      try {
+        const formData = new FormData();
+        formData.append('file', this.file);
+
+        // Send file to Flask backend for summarization
+        const response = await axios.post('http://localhost:5000/upload-document', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        // Assuming the response has the summarized text
+        const summarizedText = response.data.summary;
+        this.result = summarizedText;
+
+        // Apply typewriter effect for smooth display of summary
+        this.typeWriterEffect(this.result, 0);
+        this.showOutput = true;
+
+      } catch (error) {
+        console.error('Error summarizing document:', error);
+        alert('Error summarizing document. Please try again.');
+      }
     },
     typeWriterEffect(text, index) {
       const words = text.split(' ');
-      const interval = 50; 
+      const interval = 50;
       const wordsPerStep = 2;
       let currentIndex = index;
 
@@ -76,6 +85,7 @@ export default {
 </script>
 
 <style scoped>
+/* (same as before) */
 .page-background {
   background-color: #f5ede3; 
   min-height: 100vh;
