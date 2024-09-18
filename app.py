@@ -21,8 +21,8 @@ def argument_predict():
     user_input = data.get('userMessage')
 
     try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        prompt = ("Here's some description of a case, can you please tell, what arguments can be made from both sides? And how likely is the user to win?")
+        model = genai.GenerativeModel("gemini-1.5-pro")
+        prompt = ("Here's some description of a case, can you please tell, what arguments can be made from both sides? And how likely is the user to win (like an approximate percentage) ?")
 
         response = model.generate_content([prompt, user_input])
         result = response.text
