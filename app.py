@@ -6,6 +6,7 @@ import os
 from pdf2image import convert_from_path
 from PIL import Image
 import pytesseract
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -14,6 +15,41 @@ api_key = "AIzaSyCaWtf_lQLw9D3aE--GGZwkunDLzF8D4Bc"
 genai.configure(api_key=api_key)
 
 pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
+
+@app.route('/case-analysis', methods=['POST'])
+def case_analysis():
+    data = request.json
+    inp = data.get('description')
+
+    try:
+        model = genai.GenerativeModel("gemini-1.5-pro")
+        prompt = (
+        "Based on the following description of a case, please classify it into one of the specified genres: "
+        "Labour Matters, Rent Matters, Direct Taxes Matters, Indirect Taxes Matters, Land Acquisition and Requisition Matters, "
+        "Service Matters, Academic Matters, Election Matters, Company Law, MRTP, TRAI, SEBI, IDRAI & RBI, Arbitration Matters, "
+        "Compensation Matters, Habeas Corpus, Criminal Matters, Appeal Against Orders Of Statutory Bodies, "
+        "Divorce and Child Custody Matters, Inter caste Marriage Matters, Religious & Charitable Endowments, "
+        "Mercantile Laws, Commercial Transactions Including Banking. "
+        "Provide only the genre of the case."
+        )
+
+        response = model.generate_content([prompt, inp])
+        genre = response.text.strip()  # Ensure we trim any leading/trailing whitespace
+
+        print(f"Generated Genre: {genre}")
+
+        excel_path = r"C:/Users/Nikhil/Downloads/case_summaries.xlsx"
+        df = pd.read_excel(excel_path)
+
+        # Filter cases based on the generated genre
+        filtered_cases = df[df['Genre'] == genre][['Summary', 'Outcome']].to_dict(orient='records')
+
+        return jsonify({'genre': genre, 'cases': filtered_cases})
+    
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({'error': str(e)})
+    
 
 @app.route('/argument-predict', methods=['POST'])
 def argument_predict():
@@ -32,6 +68,7 @@ def argument_predict():
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({'error': str(e)})
+
 
 @app.route('/upload-document', methods=['POST'])
 def upload_document():
@@ -53,7 +90,7 @@ def upload_document():
         print(f"Processing PDF: {file_path}")
         
         # Convert PDF to images (for multi-page PDFs)
-        images = convert_from_path(file_path, poppler_path="C:/Users/Aditi/OneDrive/Desktop/poppler-24.07.0/Library/bin")  # Update path as necessary
+        images = convert_from_path(file_path, poppler_path="C:/Users/Nikhil/OneDrive/Desktop/poppler-24.07.0/Library/bin")  # Update path as necessary
 
         print(f"Number of pages: {len(images)}")
         
