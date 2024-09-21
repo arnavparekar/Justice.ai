@@ -1,5 +1,6 @@
 <template>
   <div class="page-background">
+    <div class="content-wrapper">
     <div class="chatbot-box">
       <h2>Argument Prediction Chatbot</h2>
       <div class="chat-window">
@@ -9,9 +10,12 @@
       </div>
       <div class="input-box">
         <input v-model="userMessage" @keyup.enter="sendMessage" placeholder="Describe your case..." />
-        <button @click="sendMessage">Send</button>
+        <button @click="sendMessage">Send
+        <img src="@/assets/send.png" alt="Send" />
+      </button>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -19,6 +23,7 @@
 //import axios from 'axios';
 
 export default {
+  name: 'ArgumentPrediction',
   data() {
     return {
       chatMessages: [
@@ -83,36 +88,69 @@ export default {
 
 <style scoped>
 .page-background {
-  background-color: #f5ede3; 
+  background-image: url('@/assets/logo9.png'); /* Background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.page-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.725); /* Dark translucent overlay */
+  z-index: -1;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: center; /* Centers the chatbot */
+  align-items: flex-start;
+  gap: 0; /* Removed gap since the logo container is gone */
 }
 
 .chatbot-box {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
+  height: auto; /* Make the chatbot span the full vertical height */
+  max-height:100vh;
+  max-width: 600px;  /* Keep width as default */
+  padding: 40px;
+  margin: 0; /* Remove margin to ensure it spans the entire height */
+  border: 1px solid #d1b06b;
   border-radius: 8px;
-  background-color: #f5f7fa;
+  background-color: rgba(22, 29, 39, 0.65);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Ensure content inside stretches properly */
 }
+
 
 h2 {
   text-align: center;
-  color: #004aad;
+  color: white;
   margin-bottom: 20px;
 }
 
 .chat-window {
-  max-height: 300px;
-  overflow-y: auto;
+  height: auto; /* Keep the chat window height fixed */
+  max-height:100vh;
+  overflow-y: auto; /* Ensure it scrolls instead of expanding */
   margin-bottom: 20px;
-  background-color: #ffffff;
+  background-color: rgba(22, 29, 39, 0.65);
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  /*border: 1px solid #2e3947;*/
+  display: flex;
+  flex-direction: column; /* Ensure messages stack vertically */
 }
 
 .chat-message {
@@ -122,13 +160,25 @@ h2 {
 }
 
 .chat-message.user {
-  background-color: #d4e5ff;
-  text-align: right;
+  background-color: #e1ffd4;
+  text-align: left;
+  display: inline-block; /* Make the box grow with content */
+  max-width: 75%; /* Limit the max width to 75% of the container */
+  padding: 10px;
+  border-radius: 14px;
+  margin-left: auto; /* Push it to the right */
+  word-wrap: break-word; /* Ensure long words wrap within the box */
 }
 
 .chat-message.bot {
   background-color: #f5f5f5;
   text-align: left;
+  display: inline-block; /* Make the box grow with content */
+  max-width: 75%; /* Limit the max width to 75% of the container */
+  padding: 10px;
+  border-radius: 14px;
+  margin-right: auto; /* Push it to the left */
+  word-wrap: break-word; /* Ensure long words wrap within the box */
 }
 
 .input-box {
@@ -140,19 +190,33 @@ input {
   flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 28px;
 }
 
 button {
-  padding: 10px 20px;
+  width: 50px; /* Fixed width */
+  height: 50px; /* Fixed height */
   background-color: #004aad;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  border: none; /* No border initially */
+  border-radius: 50%; /* Make it circular */
+  display: flex; /* Use flex to center the icon */
+  align-items: center;
+  justify-content: center;
   margin-left: 10px;
+  overflow: hidden; /* Ensure image doesn't overflow */
+  padding: 0; /* Remove padding to avoid space around the image */
+}
+
+button img {
+  width: 100%; /* Fill the button */
+  height: 100%; /* Fill the button */
+  object-fit: cover; /* Maintain aspect ratio */
 }
 
 button:hover {
-  background-color: #003780;
+  background-color: #003780; /* Change background color on hover */
+  border: 1px solid #d1b06b; /* Add border color on hover */
+  box-shadow: none; /* Prevent any additional outlines or shadows */
 }
+
 </style>
