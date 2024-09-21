@@ -1,34 +1,62 @@
-<!-- src/components/Home.vue -->
 <template>
   <div>
-    <div class="welcome-container">
-      <div class="hehe1">
-        <div class="hehe2">
-          <h1>Welcome to LegalAide</h1>
+    <div class="firstpage">
+      <div class="overlay">
+        <div class="content">
+          <h1>Welcome to Justice.AI</h1>
           <p id="para1">
-            Translate, summarize, and simplify legal documents easily and securely
+            Translate, summarize and simplify legal documents easily and securely.
           </p>
           <p id="para2">
             Upload your document to receive accurate translations and simplified
-            summaries in your regional language. Powered by AI and ML.
+            summaries in your regional language.
           </p>
         </div>
-        <div class="hehe3">
-          <img :src="image" alt="Welcome" />
-        </div>
       </div>
-      <div class="features-container">
-        <div class="feature-box" id="feature-box1">
-          <h2>1</h2>
-          <p>Translate legal documents into any regional language</p>
-        </div>
-        <div class="feature-box" id="feature-box2">
-          <h2>2</h2>
-          <p>Get Simplified Versions of any legal document pertaining to your case</p>
-        </div>
-        <div class="feature-box" id="feature-box3">
-          <h2>3</h2>
-          <p>Find and view all case documents in a sorted manner</p>
+    </div>
+    <div class="home-container">
+      <div class="header">
+        <h1>Services We Offer</h1>
+      </div>
+      <div class="grid-wrapper">
+        <div class="grid-container">
+          <div class="grid-item">
+            <div class="number-circle">
+              <div class="number">1</div>
+            </div>
+            <h3 @click="navigateTo('CaseAnalysis')">Case Analysis</h3>
+            <p>
+              Submit your case details for evaluation. We match your input with
+              our extensive database to generate a customized analysis, including actionable insights.
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="number-circle">
+              <div class="number">2</div>
+            </div>
+            <h3 @click="navigateTo('DocumentSummarization')">Document Summarization</h3>
+            <p>
+              Refines complex legal texts into simple summaries. Upload PDFs to translate key points into a native Indian language.
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="number-circle">
+              <div class="number">3</div>
+            </div>
+            <h3 @click="navigateTo('ArgumentPrediction')">Argument Prediction</h3>
+            <p>
+              Uses AI to predict arguments tailored to your case, helping build a stronger case with strategic suggestions.
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="number-circle">
+              <div class="number">4</div>
+            </div>
+            <h3 @click="navigateTo('JudgeView')">Judge Upload</h3>
+            <p>
+              Allows judges to upload case documents and verdicts. These documents are integrated into our case database.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -36,14 +64,13 @@
 </template>
 
 <script>
-import image from "@/assets/logo.png"; // Adjust the path if needed
-
 export default {
   name: "HomePage",
-  data() {
-    return {
-      image,
-    };
+  methods: {
+    navigateTo(routeName) {
+      // Navigate to the corresponding page using the Vue Router
+      this.$router.push({ name: routeName });
+    },
   },
   mounted() {
     // Watson Assistant Chatbot Integration Script
@@ -70,100 +97,171 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-.welcome-container {
+.firstpage {
+  position: relative;
+  text-align: center;
+  color: white;
+  background-image: url('@/assets/logo3.png'); /* Background image */
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay::before {
+  content: '';
+  position: absolute;
+  top: 30%; /* Adjust this to control vertical positioning */
+  left: -10%;
+  width: 120%;
+  height: 40%; /* Reduced height for a thinner strip */
+  background-color: rgba(0, 0, 0, 0.6); /* Translucent black */
+  transform: rotate(-10deg); /* Diagonal strip */
+  z-index: -1; /* Behind the text */
+}
+
+.content {
+  z-index: 2;
+  max-width: 800px;
   text-align: center;
   padding: 50px;
 }
 
-* {
-  background-color: #f5ede3;
-}
-
-.hehe1 {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.hehe2 {
-  padding-right: 100px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-top: 100px;
-}
-
-.hehe2 h1 {
-  font-size: 45px;
-  font-family: 'Impact', sans-serif;
+.content h1 {
+  font-size: 50px;
+  text-align: center;
+  font-family: 'Cormorant', garamond;
   font-weight: bolder;
 }
 
-.hehe2 p {
-  font-size: 20px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.content p {
+  font-size: 25px;
+  font-family: 'Cormorant', garamond;
 }
 
-.features-container {
+.home-container {
+  background-color: #161d27;
+  padding: 40px;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: left;
+  margin-left:170px;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  font-family: 'Cormorant', garamond;
+}
+
+.header h4 {
+  font-size: 2.5rem;
+  margin: 0;
+  font-family: 'Cormorant', garamond;
+}
+
+.header h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+  font-family: 'Cormorant', garamond;
+}
+
+/* New grid-wrapper to centralize the grid */
+.grid-wrapper {
   display: flex;
-  justify-content: space-around;
-  margin-top: 40px;
+  justify-content: center;
 }
 
-.feature-box {
-  width: 30%;
-  padding: 10px;
-  padding-bottom: 10px;
-  margin: 5px;
-  color: white;
-  border-radius: 8px;
-  text-align: center;
+/* Adjust the size of the grid and boxes */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1000px; /* Reduce width to limit the size */
+  overflow: visible; /* Make sure the expansion is visible outside */
 }
 
-#feature-box1 {
-  background-color: #6b8e23;
+.grid-item {
+  background-color: #2e3947;
+  padding: 20px;
+  border-radius: 0px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: visible; /* Prevent overflow clipping */
 }
 
-#feature-box2 {
-  background-color: #30b18a;
+.grid-item:hover {
+  transform: scale(1.04); /* Expands the box by 5% outward */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Adds a shadow effect */
 }
 
-#feature-box3 {
-  background-color: #225747;
+.grid-item h3 {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  position: relative;
+  cursor: pointer; /* Pointer cursor on hover */
+  display: inline-block; /* Restrict width to the text only */
 }
 
-#feature-box1 h2 {
-  margin-bottom: 25px;
-  font-family: 'Impact', sans-serif;
-  background-color: #6b8e23;
+/* Add an underline effect using ::after */
+.grid-item h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px; /* Position the underline slightly below the text */
+  width: 0;
+  height: 2px;
+  background-color: #d1b06b; /* Color of the underline */
+  transition: width 0.3s ease; /* Smooth transition for underline */
 }
 
-#feature-box1 p {
-  font-size: 16px;
-  background-color: #6b8e23;
+.grid-item h3:hover {
+  color: rgb(218, 218, 218); /* Change text color to black on hover */
 }
 
-#feature-box2 h2 {
-  margin-bottom: 10px;
-  background-color: #30b18a;
-  font-family: 'Impact', sans-serif;
+/* On hover, expand the underline */
+.grid-item h3:hover::after {
+  width: 100%; /* Expands the underline only under the text */
 }
 
-#feature-box2 p {
-  font-size: 16px;
-  background-color: #30b18a;
+.grid-item p {
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
-#feature-box3 h2 {
-  margin-bottom: 10px;
-  background-color: #225747;
-  font-family: 'Impact', sans-serif;
+.number-circle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #1f2732;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#feature-box3 p {
-  font-size: 16px;
-  background-color: #225747;
+.number {
+  color: #d1b06b;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Cormorant', garamond;
 }
 </style>

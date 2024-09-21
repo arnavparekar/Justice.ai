@@ -22,14 +22,14 @@ def case_analysis():
     inp = data.get('description')
 
     try:
-        model = genai.GenerativeModel("gemini-1.5-pro")
+        model = genai.GenerativeModel("gemini-1.5-flash")
         prompt = (
         "Based on the following description of a case, please classify it into one of the specified genres: "
         "Labour Matters, Rent Matters, Direct Taxes Matters, Indirect Taxes Matters, Land Acquisition and Requisition Matters, "
         "Service Matters, Academic Matters, Election Matters, Company Law, MRTP, TRAI, SEBI, IDRAI & RBI, Arbitration Matters, "
         "Compensation Matters, Habeas Corpus, Criminal Matters, Appeal Against Orders Of Statutory Bodies, "
         "Divorce and Child Custody Matters, Inter caste Marriage Matters, Religious & Charitable Endowments, "
-        "Mercantile Laws, Commercial Transactions Including Banking. "
+        "Mercantile Laws, Commercial Transactions Including Banking."
         "Provide only the genre of the case."
         )
 
@@ -57,7 +57,7 @@ def argument_predict():
     user_input = data.get('userMessage')
 
     try:
-        model = genai.GenerativeModel("gemini-1.5-pro")
+        model = genai.GenerativeModel("gemini-1.5-flash")
         prompt = ("Here's some description of a case, can you please tell, what arguments can be made from both sides? And how likely is the user to win (like an approximate percentage) ?")
 
         response = model.generate_content([prompt, user_input])
@@ -90,7 +90,7 @@ def upload_document():
         print(f"Processing PDF: {file_path}")
         
         # Convert PDF to images (for multi-page PDFs)
-        images = convert_from_path(file_path, poppler_path="C:/Users/Nikhil/OneDrive/Desktop/poppler-24.07.0/Library/bin")  # Update path as necessary
+        images = convert_from_path(file_path, poppler_path="C:/Users/Nikhil/Downloads/Release-24.07.0-0/poppler-24.07.0/Library/bin")  # Update path as necessary
 
         print(f"Number of pages: {len(images)}")
         

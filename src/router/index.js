@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/components/Home.vue'; // Adjust the path if needed
 import JudgeView from '@/components/JudgeView.vue';
-import LawyerView from '@/components/LawyerView.vue';
 import CaseAnalysis from '@/components/CaseAnalysis.vue';
 import DocumentSummarization from '@/components/DocumentSummarization.vue';
 import ArgumentPrediction from '@/components/ArgumentPrediction.vue';
@@ -10,7 +9,6 @@ import ArgumentPrediction from '@/components/ArgumentPrediction.vue';
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/judge-view', name: 'JudgeView', component: JudgeView },
-  { path: '/lawyer-view', name: 'LawyerView', component: LawyerView },
   { path: '/case-analysis', name: 'CaseAnalysis', component: CaseAnalysis },
   { path: '/document-summarization', name: 'DocumentSummarization', component: DocumentSummarization }, 
   { path: '/argument-prediction', name: 'ArgumentPrediction', component: ArgumentPrediction},
