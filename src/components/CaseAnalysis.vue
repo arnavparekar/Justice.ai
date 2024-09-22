@@ -145,6 +145,11 @@ export default {
   background-color: rgba(22, 29, 39, 0.75);  /* Light shade of #161D27 with transparency */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top:100px;
+  color:azure;
+  
+}
+.case-analysis h2{
+  margin-left:1.5%;
 }
 
 .case-analysis header {
@@ -152,8 +157,9 @@ export default {
   margin-top:15px;
   margin-bottom: 15px;
   margin-left:12px;
-  color: white;
+  color: rgb(250, 248, 248);
   text-align: left;
+ 
 }
 
 

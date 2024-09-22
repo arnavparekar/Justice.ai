@@ -211,6 +211,7 @@ button img {
   width: 100%; /* Fill the button */
   height: 100%; /* Fill the button */
   object-fit: cover; /* Maintain aspect ratio */
+  margin-right:60%;
 }
 
 button:hover {

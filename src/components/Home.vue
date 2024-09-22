@@ -106,6 +106,8 @@ export default {
   background-position: center;
   height: 100vh; /* Full viewport height */
   display: flex;
+  width:max;
+  height:max;
   justify-content: center;
   align-items: center;
   overflow: hidden;
