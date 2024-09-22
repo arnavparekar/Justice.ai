@@ -13,7 +13,7 @@
           <router-link to="/judge-view">Judge Upload</router-link>
         </div>
       </div>
-      <span class="auth-text">Sign in/Sign Up</span>
+      <span class="auth-text">Login</span>
     </nav>
   </header>
 </template>
