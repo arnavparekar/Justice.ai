@@ -29,7 +29,7 @@ Key goals:
 ## Technologies Used
 - **Frontend**: Vue.js, HTML, CSS, JavaScript
 - **Backend**: Flask (Python), Node.js
-- **APIs & Tools**: IBM Watson Assistant for conversational AI, CourtListener API for legal data, Gemini API for case analysis
+- **APIs & Tools**: IBM Watson Assistant for conversational AI, Gemini API for case analysis
 
 ## Screenshots
 <pre>
