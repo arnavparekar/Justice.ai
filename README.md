@@ -1,4 +1,4 @@
-# Justice.AI - AI-Powered Legal Aid Platform
+# Justice.AI : AI-Powered Legal Aid Platform
 **Justice.AI** law-based platform leverages AI to streamline legal processes for users and professionals. It features an **IBM-powered chatbot** that answers legal questions, providing reliable guidance. The **Case Analysis** tool matches user-submitted details with a vast database to deliver personalized insights and outcomes. The **Document Summarization** feature simplifies complex legal texts, creating concise summaries and translating key points into native Indian languages. **Argument Prediction** uses AI to suggest strategic arguments tailored to the user's case. Additionally, the **Judge Upload** feature allows judges to upload case documents and verdicts, enriching the database for more accurate case analyses.
 
 ## Table of Contents
