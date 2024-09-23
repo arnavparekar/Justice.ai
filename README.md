@@ -1,5 +1,5 @@
 # Justice.ai - AI-Powered Legal Aid Platform
-**Justice.ai** is an innovative, AI-powered legal aid platform designed to streamline and enhance access to legal assistance. By utilizing **IBM Watsonx AI** and cutting-edge technologies, the platform simplifies complex legal processes for individuals and professionals alike. 
+**Justice.ai** law-based platform leverages AI to streamline legal processes for users and professionals. It features an **IBM-powered chatbot** that answers legal questions, providing reliable guidance. The **Case Analysis** tool matches user-submitted details with a vast database to deliver personalized insights and outcomes. The **Document Summarization** feature simplifies complex legal texts, creating concise summaries and translating key points into native Indian languages. **Argument Prediction** uses AI to suggest strategic arguments tailored to the user's case. Additionally, the **Judge Upload** feature allows judges to upload case documents and verdicts, enriching the database for more accurate case analyses.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -59,7 +59,7 @@ Before running the Justice.ai project locally, ensure you have the following ins
     ```
     Run the backend using Flask:
     ```bash
-        python app.py
+    python app.py
     ```
 
 4. Install frontend dependencies:
@@ -71,25 +71,6 @@ Before running the Justice.ai project locally, ensure you have the following ins
     ```bash
     npm run serve
     ```
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
