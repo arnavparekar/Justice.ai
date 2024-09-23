@@ -60,7 +60,7 @@ Before running the Justice.AI project locally, ensure you have the following ins
 ### Steps to Run Locally
 1. Clone the repository:
     ```bash
-    git clone https://github.com/arnavparekar/Justice.AI.git
+    git clone https://github.com/arnavparekar/Justice.ai.git
     cd Justice.AI  
     ```
 
