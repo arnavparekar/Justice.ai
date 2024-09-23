@@ -75,9 +75,9 @@ export default {
   mounted() {
     // Watson Assistant Chatbot Integration Script
     window.watsonAssistantChatOptions = {
-      integrationID: "ce1d9c42-001c-4a7d-ab49-7c0e36d9d1eb", // The ID of this integration.
+      integrationID: "", // The ID of this integration.
       region: "us-south", // The region your integration is hosted in.
-      serviceInstanceID: "e6ac6530-a505-49eb-8f1c-698ee0b9f37e", // The ID of your service instance.
+      serviceInstanceID: "", // The ID of your service instance.
       onLoad: async (instance) => {
         await instance.render();
       },
