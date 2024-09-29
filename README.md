@@ -39,8 +39,8 @@ Key goals:
 
 ## Technologies Used
 - **Frontend**: Vue.js, HTML, CSS, JavaScript
-- **Backend**: Flask (Python), Node.js
-- **APIs & Tools**: IBM Watson Assistant for conversational AI, Gemini API for case analysis
+- **Backend**: Flask(Python), Node.js
+- **APIs & Tools**: IBM Watson Assistant for conversations, Gemini API for case analysis
 
 ## Screenshots
 <pre>
